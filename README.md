@@ -10,3 +10,7 @@
 - Greetings
 - HTTP
 
+### References
+- dummy.restapiexample.com
+- https://bismobaruno.medium.com/unit-test-http-request-in-golang-a96d146406e6
+- 
