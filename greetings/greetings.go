@@ -15,7 +15,6 @@ func Hello(name string) (string, error) {
 	}
 	// Create a message using a random format.
 	message := fmt.Sprintf(randomFormat(), name)
-	// message := fmt.Sprint(randomFormat())
 	return message, nil
 }
 
@@ -51,6 +50,7 @@ func randomFormat() string {
 		"Hi, %v. Welcome!",
 		"Great to see you, %v!",
 		"Hail, %v! Well met!",
+		"Hi %v, Thanks for coming to Lagos Golang meetup!",
 	}
 
 	// Return one of the message formats selected at random.

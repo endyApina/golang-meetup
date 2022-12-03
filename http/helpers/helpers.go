@@ -22,6 +22,7 @@ type HttpOptions struct {
 }
 
 func DoRequest(opt *HttpOptions, rs interface{}) (int, error) {
+	//if form data exists we specify and add the data to the object
 	if len(opt.Forms) > 0 {
 		form := url.Values{}
 		for key, value := range opt.Forms {
@@ -30,6 +31,7 @@ func DoRequest(opt *HttpOptions, rs interface{}) (int, error) {
 		opt.Data = []byte(form.Encode())
 	}
 
+	//specify timeout
 	if opt.TO != nil {
 		timeout := *opt.TO
 		ctx, cancel := context.WithTimeout(opt.Ctx, timeout*time.Second)

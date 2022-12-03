@@ -5,8 +5,11 @@ package main
 
 import (
 	"fmt"
-	"golang-meetup/greetings"
 	"log"
+	"net/http"
+
+	"github.com/endyApina/golang-meetup/greetings"
+	"github.com/endyApina/golang-meetup/http/client"
 )
 
 func main() {
@@ -17,7 +20,7 @@ func main() {
 	log.SetFlags(0)
 
 	// A slice of names.
-	names := []string{"Gladys", "Samantha", "Darrin"}
+	names := []string{"Adesina", "David", "Darrin"}
 
 	// Request greeting messages for the names.
 	messages, err := greetings.Hellos(names)
@@ -27,4 +30,8 @@ func main() {
 	// If no error was returned, print the returned map of
 	// messages to the console.
 	fmt.Println(messages)
+
+	//router
+	http.HandleFunc("/hello", client.GetEmployeeHandler)
+	http.ListenAndServe(":8090", nil)
 }

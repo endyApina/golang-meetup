@@ -2,10 +2,12 @@ package client
 
 import (
 	"context"
+	"encoding/json"
+	"fmt"
 	"net/http"
 	"time"
 
-	"golang-meetup/greetings/http/helpers"
+	"github.com/endyApina/golang-meetup/http/helpers"
 )
 
 type ListModel struct {
@@ -14,15 +16,21 @@ type ListModel struct {
 }
 
 type EmployeeModel struct {
-	ID             string `json:"id"`
+	ID             int    `json:"id"`
 	EmployeeName   string `json:"employee_name"`
-	EmployeeSalary string `json:"employee_salary"`
-	EmployeeAge    string `json:"employee_age"`
+	EmployeeSalary int    `json:"employee_salary"`
+	EmployeeAge    int    `json:"employee_age"`
 	ProfileImage   string `json:"profile_image"`
 }
 
 type API struct {
 	URL string
+}
+
+func NewClientHandler(url string) *API {
+	return &API{
+		URL: url,
+	}
 }
 
 func (api *API) GetEmployees() (*ListModel, error) {
@@ -38,4 +46,20 @@ func (api *API) GetEmployees() (*ListModel, error) {
 
 	_, err := helpers.DoRequest(opt, employees)
 	return employees, err
+}
+
+func GetEmployeeHandler(w http.ResponseWriter, req *http.Request) {
+	fmt.Fprintf(w, "hello\n")
+	w.Header().Set("Content-Type", "application/json")
+	clientHandlers := NewClientHandler("http://dummy.restapiexample.com/")
+	models, err := clientHandlers.GetEmployees()
+	if err != nil {
+		errorMesaage := fmt.Sprintf("%v", err.Error())
+		w.WriteHeader(http.StatusCreated)
+		json.NewEncoder(w).Encode(errorMesaage)
+		return
+	}
+
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(models)
 }
